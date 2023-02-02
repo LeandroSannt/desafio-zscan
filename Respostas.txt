@@ -1,0 +1,267 @@
+
+
+1) Crie um serviço em Node.js que exponha uma API que retorne a lista de
+estados brasileiros, com nome e sigla uf.
+Resource URI > GET - http://localhost/estados
+
+Rodar a api e chamar o endpoint http://localhost:3000/estados
+
+2) Nesse mesmo serviço em Node.js, exponha uma API que retorne a população
+de um determinado estado brasileiro :
+Resource URI > GET - http://localhost/populacao/sp
+
+Rodar a api e chamar o endpoint http://localhost:3000/estados/'uf do estado que deseja'
+
+3) Crie mais uma API que acesse o serviço de população e retornar junto ao
+resultado a população de cada estado.
+
+Rodar a api e chamar o endpoint http://localhost:3000/estados/populacao
+
+4) 
+A) Crie uma query que retorne todos os usuários criados no mês de janeiro de 2013, nos
+grupos (IDs) 15 e 40.
+
+ SELECT *
+ FROM users
+ JOIN groups ON users.id = groups.user_id
+ JOIN permissions ON groups.id = permissions.groups_id
+ WHERE users.created_at BETWEEN '2013-01-01' AND '2013-01-31'
+ AND permissions.group_id IN (15, 40);
+
+B) Crie uma query para autenticação do usuário (função hash SHA1).
+ SELECT id, username
+ FROM users
+ WHERE username = 'leandro'
+ AND password = SHA1('senha');
+
+C) Insira um usuário qualquer e defina que ele pertence aos grupos (IDs) 20 e 33.
+  Não sei
+
+D) Crie uma query que retorne todos os usuários que possuem as permissões (IDs) 55, 80 e
+48.
+
+ SELECT users.*
+ FROM users
+ JOIN groups ON users.id = groups.user_id
+ JOIN permissions ON groups.id = permissions.groups_id
+ WHERE permissions.id IN (55, 80, 48)
+ GROUP BY users.id
+
+E) Delete todos os dados de todas as tabelas.
+	
+DELETE FROM PERMISSIONS
+DELETE FROM GROUPS
+DELETE FROM USERS
+
+5) Usando Promise, simule o acesso assíncrono à 2 métodos e apresente uma
+mensagem de sucesso quando os 2 métodos terminarem sua execução.
+
+func1 = () => {
+  const timerRandom = Math.floor(Math.random() * 5000 + 1);
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Method 1 executed");
+      resolve();
+    }, timerRandom);
+  });
+};
+
+func2 = () => {
+  const timerRandom = Math.floor(Math.random() * 5000 + 1);
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Method 2 executed");
+      resolve();
+    }, timerRandom);
+  });
+};
+
+Promise.all([func1(), func2()]).then(() => {
+  console.log("terminei");
+});
+
+
+6) Agora usando async/await, repita a simulação da questão anterior.
+
+utilizando as mesma funções da questão anterior
+
+async function main() {
+  try {
+    await Promise.all([func1(), func2()]);
+    console.log("terminei");
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+main();
+
+
+7) Utilizando Typescript, crie as classes de acordo com o diagrama a seguir;
+
+interface IEndereco {
+  logradouro: string;
+  complemento: Date | string;
+}
+
+interface IClientProps {
+  nome: string;
+  dataNascimento: string;
+  endereco: IEndereco;
+}
+
+class Endereco {
+  logradouro: string;
+  complemento: Date | string;
+
+  constructor({ logradouro, complemento }: IEndereco) {
+    this.logradouro = logradouro;
+    this.complemento = complemento;
+  }
+
+  public getLogradouro(): string {
+    return "";
+  }
+
+  public getComplemento(): string {
+    return "";
+  }
+
+  public getEnderecoComplemento(): string {
+    return "";
+  }
+}
+
+class Cliente {
+  nome: string;
+  dataNascimento: string;
+  endereco: IEndereco;
+
+  constructor({ nome, dataNascimento, endereco }: IClientProps) {
+    this.nome = nome;
+    this.dataNascimento = dataNascimento;
+    this.endereco = endereco;
+  }
+
+  public getNome(): string {
+    return "leandro";
+  }
+
+  public getIdade(): number {
+    return 0;
+  }
+
+  private calculaIdade(): number {
+    return 0;
+  }
+}
+
+
+8) Veja o código a seguir e responda as perguntas a seguir.
+
+A) O que será apresentado no console? Por quê?
+ira retornar 4, 4 vezes a cada 100 milisegundos porque o var esta declarada no escopo da função ai ela pode ser
+acessada por todos os metodos 	
+
+B)Altere o código de forma que os números 0, 1, 2 e 3 sejam apresentados no console.
+Justifique a alteração.
+
+para fazer com que o codigo exiba 0, 1, 2, 3 alterando o var por let, pois o let tem escopo de bloco
+
+Mostre na tela números de 1 a 100, mas para os números múltiplos de 3
+mostre a palavra “Fizz”, para os números múltiplos de 5 mostre a palavra “Buzz”
+e para os números múltiplos de 3 e 5 a palavra “FizzBuzz”.
+
+for (let i = 1; i <= 100; i++) {
+  if (i % 3 === 0 && i % 5 === 0) {
+    console.log("FizzBuzz");
+  } else if (i % 3 === 0) {
+    console.log("Fizz");
+  } else if (i % 5 === 0) {
+    console.log("Buzz");
+  }
+}
+
+10) Troque os valores das variáveis x e y sem o auxílio de outra terceira variável.
+
+ let x = 24;
+ let y = 99;
+
+ [x, y] = [y, x];
+
+
+11) Utilizando Javascript adicione um ouvinte para o evento click que exiba um
+alerta quando algum dos itens for clicado na tela;
+
+const lista = document.querySelectorAll("#nav li");
+
+for (let i = 0; i < lista.length; i++) {
+  lista[i].addEventListener("click", function () {
+    alert(`cliquei no ${lista[i].textContent}`);
+  });
+}
+
+
+12) Utilizando css, selecione a tag li referente ao texto “Onde Comprar”;
+
+#nav li:nth-child(2) {
+ color: red;
+}
+
+13) Atribua a cor vermelho nas tags <li> que tenha o texto, Home, Produtos e
+Contato e nas tags que contenha o texto Quem Somos e Onde Comprar o estilo
+negrito;
+
+#nav li:nth-child(odd) {
+  color: red;
+}
+
+#nav li:nth-child(even) {
+  font-weight: bold;
+}
+
+14) Transforme o nosso exemplo 1 no exemplo 2 apenas usando css;
+
+#nav {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+15) Crie uma aplicação reactJS que busque os dados das apis desenvolvidas na
+primeira tarefa liste em uma página de acordo com um menu lateral; Use a
+imagem para desenvolver a tarefa.
+
+Rodar o frontend
+
+16) Indique a linha de comando (shell) para listar somente os processos node
+rodando no server.
+
+ps -ef | grep node | grep -v grep
+
+17) Crie um arquivo docker-compose com um container node e outro container
+mysql.
+
+version: "3"
+services:
+  node-app:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: ["npm", "start"]
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql@123
+      MYSQL_DATABASE: zscan-desafio
+    ports:
+      - "3395:3306"
+
+
+
+
+
